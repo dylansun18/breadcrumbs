@@ -9,6 +9,11 @@
             "UnauthRoleName": "breadcrumbs-20190330000806-unauthRole",
             "StackName": "breadcrumbs-20190330000806",
             "StackId": "arn:aws:cloudformation:us-west-2:763327914732:stack/breadcrumbs-20190330000806/931d33b0-52ba-11e9-9d90-0695eefd7ce2"
+        },
+        "categories": {
+            "auth": {
+                "cognitoe6bf83c7": {}
+            }
         }
     }
 }

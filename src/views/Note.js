@@ -10,7 +10,8 @@ export default class Note extends React.Component {
   };
 
   state = {
-
+    upvote: 0,
+    downvote: 0
   };
 
   componentDidMount() {
@@ -21,25 +22,32 @@ export default class Note extends React.Component {
     // Called every time setState or forceUpdate is called
   }
 
-  upvoteinc() {
-    
+  up=() =>{
+    value = this.state.upvote
+    this.setState({upvote: this.state.upvote + 1})
   }
+
+  down = () => {
+    value = this.state.downvote
+    this.setState({downvote: this.state.downvote + 1})
+  }
+
 
   render() {
     const {navigate} = this.props.navigation;
-    var note_text = "Hi this will be a loooooong message so bear with me. I am bored with nothing to do "
+    var note_text = "Hi this will be loooooooooong message so bear with me. I am bored with nothing to do.  "
     var author = "John Smith"
-    var upvote = 5;
-    var downvote = 1;
+    
     return (  
       <View style={styles.container}>
         <Text style= {styles.title} >Notes</Text>
         <Text style = {top_corner.container} > {note_text} </Text>
-        <Text style = {top_corner.subtitle} >Author: {author}</Text>
-        <Button style={{marginTop: 10}} title='Upvote' onPress={() => upvote++} />
-        <Button style={{marginTop: 10}} title='Downvote' onPress={() => downvote++} />
-        <Text style = {{marginTop: 10}}  > Upvote: {upvote} </Text>
-        <Text style = {{marginTop: 10}} >Downvote: {downvote}</Text>
+        <View style = {bottom.container}>
+          <Text style = {top_corner.subtitle} >Author: {author}</Text>
+          <Button style={{marginTop: 10}} title='Upvote' onPress={this.up} />
+          <Button style={{marginTop: 10}} title='Downvote' onPress={this.down} />
+          <Text style = {{marginTop: 10}}  > Votes: {this.state.upvote - this.state.downvote} </Text>
+        </View>
       </View>
     );
   }
@@ -61,9 +69,6 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 15,
   },
-  view1: {
-    backgroundColor: 'red'
-  }
 });
 
 const top_corner = StyleSheet.create({
@@ -80,3 +85,12 @@ const top_corner = StyleSheet.create({
     fontSize: 15
   }
 });
+
+const bottom  = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})

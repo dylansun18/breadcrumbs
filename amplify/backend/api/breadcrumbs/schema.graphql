@@ -1,0 +1,16 @@
+type User @model {
+  id: ID!
+  username: String!
+  email: String!
+  emailVerified: Boolean
+  notes: [Note] @connection(name: "UserNotes")
+}
+
+type Note @model {
+  id: ID!
+  createdAt: String
+  longitude: String
+  latitude: String
+  content: String
+  user: User @connection(name: "UserNotes")
+}

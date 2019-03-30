@@ -12,10 +12,10 @@ class HomeScreen extends React.Component {
   render() {
     const {navigate} = this.props.navigation;
     return (
-      <View style={styles.container}>
+      <View style={styles.container1}>
         <Text style={styles.title}>Breadcrumbs</Text>
         <TouchableOpacity style={styles.view1} onPress={() => this.props.navigation.navigate('Main')}>
-          <Text style={styles.subtitle} >Tap here to enter</Text>
+          <Text style={styles.subtitle}>Tap here to enter</Text>
         </TouchableOpacity>
       </View>
     );
@@ -32,7 +32,11 @@ class MainScreen extends React.Component {
   render() {
     const {navigate} = this.props.navigation;
     return (
-      <View style={styles.cam}>
+
+      <View style={styles.container2}>
+        <View style={styles.cam}>
+          
+        </View>
         <View style={styles.buttons}>
       
         </View>
@@ -54,10 +58,15 @@ const App = createAppContainer(MainNav);
 export default App;
 
 const styles = StyleSheet.create({
-  container: {
+  container1: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  container2: {
+    flex: 1,
+    backgroundColor: '#fff',
     justifyContent: 'center',
   },
   title: {
@@ -68,5 +77,16 @@ const styles = StyleSheet.create({
   },
   view1: {
     backgroundColor: 'red'
+  },
+  cam: {
+    width:300,
+    height:300,
+    backgroundColor: 'blue'
+  },
+  buttons: {
+    width:300,
+    height:100,
+    backgroundColor: 'blue',
+    marginTop: 10
   }
 });

@@ -1,6 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
+
+// import Main from './src/views/Main';
+import NewNote from './src/views/NewNote';
+import Note from './src/views/Note';
+import Profile from './src/views/Profile';
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -17,6 +22,9 @@ class HomeScreen extends React.Component {
         <TouchableOpacity style={styles.view1} onPress={() => this.props.navigation.navigate('Main')}>
           <Text style={styles.subtitle} >Tap here to enter</Text>
         </TouchableOpacity>
+        <Button style={{marginTop: 10}} title='New Note' onPress={() => navigate('NewNote')} />
+        <Button style={{marginTop: 10}} title='Note' onPress={() => navigate('Note')} />
+        <Button style={{marginTop: 10}} title='Profile' onPress={() => navigate('Profile')} />
       </View>
     );
   }
@@ -34,7 +42,7 @@ class MainScreen extends React.Component {
     return (
       <View style={styles.cam}>
         <View style={styles.buttons}>
-      
+
         </View>
       </View>
 
@@ -45,6 +53,9 @@ class MainScreen extends React.Component {
 const MainNav = createStackNavigator({
   Home: HomeScreen,
   Main: MainScreen,
+  NewNote: NewNote,
+  Note: Note,
+  Profile: Profile
 },{
   initialRouteName: "Home"
 });

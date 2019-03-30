@@ -1,18 +1,18 @@
 {
     "env": {
         "awscloudformation": {
-            "AuthRoleName": "breadcrumbs-20190330000806-authRole",
-            "UnauthRoleArn": "arn:aws:iam::763327914732:role/breadcrumbs-20190330000806-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::763327914732:role/breadcrumbs-20190330000806-authRole",
+            "AuthRoleName": "breadcrumbs-20190330155353-authRole",
+            "UnauthRoleArn": "arn:aws:iam::763327914732:role/breadcrumbs-20190330155353-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::763327914732:role/breadcrumbs-20190330155353-authRole",
             "Region": "us-west-2",
-            "DeploymentBucketName": "breadcrumbs-20190330000806-deployment",
-            "UnauthRoleName": "breadcrumbs-20190330000806-unauthRole",
-            "StackName": "breadcrumbs-20190330000806",
-            "StackId": "arn:aws:cloudformation:us-west-2:763327914732:stack/breadcrumbs-20190330000806/931d33b0-52ba-11e9-9d90-0695eefd7ce2"
+            "DeploymentBucketName": "breadcrumbs-20190330155353-deployment",
+            "UnauthRoleName": "breadcrumbs-20190330155353-unauthRole",
+            "StackName": "breadcrumbs-20190330155353",
+            "StackId": "arn:aws:cloudformation:us-west-2:763327914732:stack/breadcrumbs-20190330155353/af9276c0-533e-11e9-a91e-02a37d7e05c4"
         },
         "categories": {
             "auth": {
-                "cognitoe6bf83c7": {}
+                "cognito301a0ddd": {}
             }
         }
     }

@@ -13,6 +13,7 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
         createdAt
         longitude
         latitude
+        altitude
         content
       }
       nextToken
@@ -32,6 +33,7 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
         createdAt
         longitude
         latitude
+        altitude
         content
       }
       nextToken
@@ -51,6 +53,7 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
         createdAt
         longitude
         latitude
+        altitude
         content
       }
       nextToken
@@ -64,6 +67,7 @@ export const createNote = `mutation CreateNote($input: CreateNoteInput!) {
     createdAt
     longitude
     latitude
+    altitude
     content
     user {
       id
@@ -83,6 +87,7 @@ export const updateNote = `mutation UpdateNote($input: UpdateNoteInput!) {
     createdAt
     longitude
     latitude
+    altitude
     content
     user {
       id
@@ -102,6 +107,7 @@ export const deleteNote = `mutation DeleteNote($input: DeleteNoteInput!) {
     createdAt
     longitude
     latitude
+    altitude
     content
     user {
       id

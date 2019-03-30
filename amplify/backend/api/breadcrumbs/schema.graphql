@@ -11,6 +11,7 @@ type Note @model {
   createdAt: String
   longitude: String
   latitude: String
+  altitude: String
   content: String
   user: User @connection(name: "UserNotes")
 }

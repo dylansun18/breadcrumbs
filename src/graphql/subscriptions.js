@@ -13,6 +13,7 @@ export const onCreateUser = `subscription OnCreateUser {
         createdAt
         longitude
         latitude
+        altitude
         content
       }
       nextToken
@@ -32,6 +33,7 @@ export const onUpdateUser = `subscription OnUpdateUser {
         createdAt
         longitude
         latitude
+        altitude
         content
       }
       nextToken
@@ -51,6 +53,7 @@ export const onDeleteUser = `subscription OnDeleteUser {
         createdAt
         longitude
         latitude
+        altitude
         content
       }
       nextToken
@@ -64,6 +67,7 @@ export const onCreateNote = `subscription OnCreateNote {
     createdAt
     longitude
     latitude
+    altitude
     content
     user {
       id
@@ -83,6 +87,7 @@ export const onUpdateNote = `subscription OnUpdateNote {
     createdAt
     longitude
     latitude
+    altitude
     content
     user {
       id
@@ -102,6 +107,7 @@ export const onDeleteNote = `subscription OnDeleteNote {
     createdAt
     longitude
     latitude
+    altitude
     content
     user {
       id

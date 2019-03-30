@@ -13,6 +13,7 @@ export const getUser = `query GetUser($id: ID!) {
         createdAt
         longitude
         latitude
+        altitude
         content
       }
       nextToken
@@ -45,6 +46,7 @@ export const getNote = `query GetNote($id: ID!) {
     createdAt
     longitude
     latitude
+    altitude
     content
     user {
       id
@@ -69,6 +71,7 @@ export const listNotes = `query ListNotes(
       createdAt
       longitude
       latitude
+      altitude
       content
       user {
         id

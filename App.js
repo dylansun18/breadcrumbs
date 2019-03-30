@@ -29,6 +29,9 @@ const AppNavigator = createStackNavigator(
   }
 );
 
+// AWS config
+Amplify.configure(AWSConfig);
+
 const AppContainer = createAppContainer(AppNavigator);
 
 class App extends React.Component {

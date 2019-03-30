@@ -47,11 +47,14 @@ export default class Note extends React.Component {
 
 
   render() {
+    const {goBack} = this.props.navigation;
     var note_text = "Hi this will be loooooooooong message so bear with me. I am bored with nothing to do.  "
     var author = "John Smith"
     
     return (  
+      
       <View style={styles.container}>
+        <Button style = {top_corner.subtitle} title = 'Back' onPress ={() => goBack()} />
         <Text style= {styles.title} >Note</Text>
         <Text style = {top_corner.container} > {note_text} </Text>
         <View style = {bottom.container}>
@@ -59,6 +62,7 @@ export default class Note extends React.Component {
           <Button style={{marginTop: 10}} title='Upvote' onPress={this.up} />
           <Button style={{marginTop: 10}} title='Downvote' onPress={this.down} />
           <Text style = {{marginTop: 10}}  > Votes: {this.state.upvote - this.state.downvote} </Text>
+          
         </View>
       </View>
     );

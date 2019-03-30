@@ -1,8 +1,17 @@
 {
 	"auth": {
-		"cognitoe6bf83c7": {
+		"cognito301a0ddd": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation"
+		}
+	},
+	"api": {
+		"breadcrumbs": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"securityType": "AMAZON_COGNITO_USER_POOLS"
+			}
 		}
 	}
 }

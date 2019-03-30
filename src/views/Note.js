@@ -10,6 +10,7 @@ export default class Note extends React.Component {
   };
 
   state = {
+    vote: 1,
     upvote: 0,
     downvote: 0
   };
@@ -23,24 +24,35 @@ export default class Note extends React.Component {
   }
 
   up=() =>{
-    value = this.state.upvote
-    this.setState({upvote: this.state.upvote + 1})
+    if(this.state.vote == 0)
+    {
+      return;
+    }
+    this.setState({
+      upvote: this.state.upvote + 1,
+      vote: this.state.vote -1
+    })
   }
 
   down = () => {
-    value = this.state.downvote
-    this.setState({downvote: this.state.downvote + 1})
+    if(this.state.vote ==0)
+    {
+      return;
+    }
+    this.setState({
+      downvote: this.state.downvote + 1,
+      vote: this.state.vote -1
+    })
   }
 
 
   render() {
-    const {navigate} = this.props.navigation;
     var note_text = "Hi this will be loooooooooong message so bear with me. I am bored with nothing to do.  "
     var author = "John Smith"
     
     return (  
       <View style={styles.container}>
-        <Text style= {styles.title} >Notes</Text>
+        <Text style= {styles.title} >Note</Text>
         <Text style = {top_corner.container} > {note_text} </Text>
         <View style = {bottom.container}>
           <Text style = {top_corner.subtitle} >Author: {author}</Text>

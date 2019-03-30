@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 
+
+
 class HomeScreen extends React.Component {
   static navigationOptions = {
     header:null
@@ -35,7 +37,7 @@ class MainScreen extends React.Component {
     return (
       <View style={styles.container2}>
         <View style={styles.cam}>
-
+          
         </View>
         <View style={styles.buttons}>
           <TouchableOpacity style={styles.button}> 

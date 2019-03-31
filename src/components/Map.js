@@ -1,6 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import MapView, { Marker, Location, Permissions } from 'react-native-maps';
+import MapView, { Marker, Location, Permissions, Circle } from 'react-native-maps';
+
+import noteMarker from './noteMarker.js';
+
+import {Auth, API, graphqlOperation} from 'aws-amplify';
 
 import noteMarker from './noteMarker.js';
 
@@ -9,11 +13,11 @@ export default class Map extends React.Component {
 	constructor(props) {
 		super(props);
 	}
-	
+
 	state = {
 		region: null,
 		circle: null,
-		note_list: [{latitude: -118.451083, longitude: 34.071543}] 				//should contain a list of nearby notes with info about location 
+		note_list: [{latitude: -118.451083, longitude: 34.071543}] 				//should contain a list of nearby notes with info about location
 	};
 
 	componentWillMount() {
@@ -72,9 +76,6 @@ export default class Map extends React.Component {
 		const NoteMarkers = this.state.note_list.map((notes) =>
 			<noteMarker key={note.id} navigator={this.props.navigator} notes = {notes}/>
 		);
-		const NoteMarkers = this.state.note_list.map((notes) =>
-		<noteMarker key={note.id} navigator={this.props.navigator} notes = {notes}/>
-		);
 		return (
 			
 			<View>
@@ -88,7 +89,7 @@ export default class Map extends React.Component {
 					>
 					<Circle
 						center = {this.state.circle}
-						radius = {1000}												
+						radius = {1000}
 						/>
 						{NoteMarkers}
 				</MapView>
@@ -100,20 +101,18 @@ export default class Map extends React.Component {
 				/>
 				</View>
 			</View>
-		</View>
-		);
+		</View>);
 	}
+	styles = StyleSheet.create({
+		container: {
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			right: 0,
+			bottom: 0,
+			justifyContent: 'flex-end',
+			alignItems: 'center',
+			height: 300,
+		},
+	});
 }
-
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    height: 300,
-  },
-});

@@ -16,10 +16,6 @@ export default class NewNote extends React.Component {
 
   };
 
-  Amplify.configure(AWSConfig);
-
-  const AppContainer = createAppContainer(AppNavigator);
-
   componentDidMount() {
     // Called once after the component is mounted
 

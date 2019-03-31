@@ -24,25 +24,24 @@ export default class Profile extends React.Component {
 	const { navigate } = this.props.navigation;
     return (
 	<View style={{borderWidth: 20, borderTopWidth: 35, borderColor: 'transparent'}}>
-		<View style={{flexDirection:'row'}}>
+		<View style={{flexDirection:'row', alignItems: 'stretch'}}>
 			<Image
 				style={{width: 100, height: 100}}
 				source={{uri: 'https://i.imgur.com/7aQkKHk.png'}}
 			/>
-			<Text style={{fontSize: 20}}>
-				<Text style={{fontWeight: 'bold'}}>  Username: </Text>
-				<Text style={{color: 939393}}>I am cool</Text>
+			<Text style={{borderLeftWidth: 10}}>
+				<Text style={{fontWeight: 'bold'}}>FetchUsername</Text>
 				{"\n"}
+				<Text>This is your status message</Text>
 			</Text>
 		</View>
-
+		<Text>{"\n"}</Text>
 		<Button
-			onPress={() => navigate('Home')}
-			title="Home"
-			color="#841584"
-			accessibilityLabel="Return to Home Screen"
+				onPress={() => navigate('Main')}
+				title="Return to Home Screen"
+				accessibilityLabel="Return to Home Screen"
 		/>
-
+			
 		<Text style={{fontWeight: 'bold'}}>
 			{"\n"}
 			Scroll down to view your achievements

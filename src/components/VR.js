@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   cam: {
     width:300,
-    height:450,
+    height:300,
     marginTop:50,
   },
   buttons: {

@@ -15,6 +15,11 @@ export default class Note extends React.Component {
     downvote: 0
   };
 
+  getNote(note_id) {
+    return API.graphql(graphqlOperation(getNote,{
+      id: note_id
+    }));
+  }
   componentDidMount() {
     // Called once after the component is mounted
   }
@@ -48,11 +53,12 @@ export default class Note extends React.Component {
 
   render() {
     const {goBack} = this.props.navigation;
-    var note_text = "Hi this will be loooooooooong message so bear with me. I am bored with nothing to do.  "
-    var author = "John Smith"
-    
-    return (  
-      
+    var note_text = this.state.note.content
+    var author = this.state.note.author
+    var upvote = this.state.note.upvote
+    var downvote = this.state.note.downvote
+
+    return (
       <View style={styles.container}>
         <Button style = {top_corner.subtitle} title = 'Back' onPress ={() => goBack()} />
         <Text style= {styles.title} >Note</Text>
@@ -92,7 +98,7 @@ const top_corner = StyleSheet.create({
     flex: 1,
     marginTop: 10,
     marginLeft: 20,
-    marginRight: 20, 
+    marginRight: 20,
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',

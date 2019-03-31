@@ -1,15 +1,35 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import MapView, { Marker, Location, Permissions } from 'react-native-maps';
+import MapView, { Marker, Location, Permissions, Circle } from 'react-native-maps';
+
+import {getNote} from '../graphql/queries';
+
+import {Auth, API, graphqlOperation} from 'aws-amplify';
+
+import NoteMarker from './noteMarker.js';
 
 export default class Map extends React.Component {
 	
 	state = {
 		region: null,
+		circle: {latitude: -118.451083, longitude: 34.071543},
+		note_list: [{latitude: -118.451083, longitude: 34.071543}] 				//should contain a list of nearby notes with info about location
 	};
 
+	
+
 	componentWillMount() {
-		this.getLocationAsync();
+		// this.getLocationAsync();
+		// API.graphql(graphqlOperation(getNote, {latitude: this.props.latitude, longitude: this.props.longitude}))
+		// .then((data) => {
+			// this.setState({
+				// note: data.data.getNote
+			// });
+		// });
+		
+		this.setState({
+			notes:[{latitude: 34.070976, longitude: -118.446930}, {latitude: 34.069335, longitude: -118.448088}]
+		});
 	}
 
 	getLocationAsync = async () => {
@@ -43,6 +63,9 @@ export default class Map extends React.Component {
 
 	render() {
 		const { navigate } = this.props.navigation;
+		const NoteMarkers = this.state.note_list.map((note) =>
+		 	<NoteMarker key={note.id} navigator={this.props.navigator} note = {note}/>
+		);
 		return (
 			<View>
 				<View>
@@ -51,14 +74,21 @@ export default class Map extends React.Component {
 						region={this.region}
 						showsUserLocation
 						showsMyLocationButton
-					/>
-				</View>
-				<View style={{top: 300}}>
-				<Button
-					onPress={() => navigate('Main')}
-					title="Return to Home Screen"
-					accessibilityLabel="Return to Home Screen"
-				/>
+						followsUserLocation
+					>
+						<Circle
+							center = {this.state.circle}
+							radius = {1000}
+						/>
+						{NoteMarker}		
+					</MapView>
+					<View style={{top: 300}}>
+						<Button
+							onPress={() => navigate('Main')}
+							title="Return to Home Screen"
+							accessibilityLabel="Return to Home Screen"
+						/>
+					</View>
 				</View>
 			</View>
 		);
@@ -66,14 +96,14 @@ export default class Map extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    height: 300,
-  },
+	container: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		justifyContent: 'flex-end',
+		alignItems: 'center',
+		height: 500,
+	},
 });

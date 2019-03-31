@@ -26,14 +26,15 @@ export default class Main extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container1}>
-		<Map style={{flex: 1}} />
+		<Map navigation={this.props.navigation} style={{flex: 1}} />
 		<VR style={{flex: 1}} />
-        
       </View>
     );
   }
 }
 
+
+        
 const styles = StyleSheet.create({
   container1: {
     flex: 1,
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
   },
   cam: {
     width:300,
-    height:450,
+    height:300,
     marginTop:50,
   },
   buttons: {

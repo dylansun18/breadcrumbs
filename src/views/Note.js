@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Button, ActivityIndicator /* other libraries he
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 
 import {Auth, API, graphqlOperation} from 'aws-amplify';
-import { userInfo } from 'os';
+//import { userInfo } from 'os';
 
 
 export default class Note extends React.Component {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppRegistry, View, Image, StyleSheet, Text, Button } from 'react-native';
-
+import { Auth, API, graphqlOperation } from 'aws-amplify';
 
 export default class Profile extends React.Component {
 
@@ -9,18 +9,46 @@ export default class Profile extends React.Component {
   };
 
   state = {
-
+    user: {},
+    isLoading: true
   };
 
   componentDidMount() {
-    // Called once after the component is mounted
+    Auth.currentAuthenticatedUser()
+    .then(user => {
+      const username = user.username;
+      API.graphql(graphqlOperation(listUsers, {
+        filter: {
+          username: { eq: username }
+        },
+      }))
+      .then(data => {
+        const user = data.data.listUsers.items[0];
+        this.setState({
+          user: user,
+          isLoading: false
+        });
+      });
+    });
   }
 
   componentDidUpdate() {
     // Called every time setState or forceUpdate is called
   }
 
+  //loading screen
+  renderLoading = () => {
+    return (
+      <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+        <ActivityIndicator size="large" style={{marginTop: 250}}/>
+      </View>
+    )
+  }
+
   render() {
+    if(this.state.isLoading) {
+      return(this.renderLoading());
+    }
 	const { navigate } = this.props.navigation;
     return (
 	<View style={{borderWidth: 20, borderTopWidth: 35, borderColor: 'transparent'}}>
@@ -30,7 +58,7 @@ export default class Profile extends React.Component {
 				source={{uri: 'https://i.imgur.com/7aQkKHk.png'}}
 			/>
 			<Text style={{borderLeftWidth: 10}}>
-				<Text style={{fontWeight: 'bold'}}>FetchUsername</Text>
+				<Text style={{fontWeight: 'bold'}}>{this.state.user.username}</Text>
 				{"\n"}
 				<Text>This is your status message</Text>
 			</Text>
@@ -41,7 +69,7 @@ export default class Profile extends React.Component {
 				title="Return to Home Screen"
 				accessibilityLabel="Return to Home Screen"
 		/>
-			
+
 		<Text style={{fontWeight: 'bold'}}>
 			{"\n"}
 			Scroll down to view your achievements

@@ -121,8 +121,6 @@ export default class Main extends React.Component {
     this.renderer.render(this.scene, this.camera);
   };
 }
-const screenCenter = new THREE.Vector2(0.5, 0.5);
-}
 
 const styles = StyleSheet.create({
   container1: {

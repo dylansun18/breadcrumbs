@@ -7,6 +7,18 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
     username
     email
     emailVerified
+    achievements {
+      id
+      imageUri
+      name
+      description
+      achievers {
+        id
+        username
+        email
+        emailVerified
+      }
+    }
     notes {
       items {
         id
@@ -15,6 +27,8 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
         latitude
         altitude
         content
+        upvotes
+        downvotes
       }
       nextToken
     }
@@ -27,6 +41,18 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
     username
     email
     emailVerified
+    achievements {
+      id
+      imageUri
+      name
+      description
+      achievers {
+        id
+        username
+        email
+        emailVerified
+      }
+    }
     notes {
       items {
         id
@@ -35,6 +61,8 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
         latitude
         altitude
         content
+        upvotes
+        downvotes
       }
       nextToken
     }
@@ -47,6 +75,18 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
     username
     email
     emailVerified
+    achievements {
+      id
+      imageUri
+      name
+      description
+      achievers {
+        id
+        username
+        email
+        emailVerified
+      }
+    }
     notes {
       items {
         id
@@ -55,6 +95,8 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
         latitude
         altitude
         content
+        upvotes
+        downvotes
       }
       nextToken
     }
@@ -69,11 +111,19 @@ export const createNote = `mutation CreateNote($input: CreateNoteInput!) {
     latitude
     altitude
     content
-    user {
+    upvotes
+    downvotes
+    author {
       id
       username
       email
       emailVerified
+      achievements {
+        id
+        imageUri
+        name
+        description
+      }
       notes {
         nextToken
       }
@@ -89,11 +139,19 @@ export const updateNote = `mutation UpdateNote($input: UpdateNoteInput!) {
     latitude
     altitude
     content
-    user {
+    upvotes
+    downvotes
+    author {
       id
       username
       email
       emailVerified
+      achievements {
+        id
+        imageUri
+        name
+        description
+      }
       notes {
         nextToken
       }
@@ -109,11 +167,91 @@ export const deleteNote = `mutation DeleteNote($input: DeleteNoteInput!) {
     latitude
     altitude
     content
-    user {
+    upvotes
+    downvotes
+    author {
       id
       username
       email
       emailVerified
+      achievements {
+        id
+        imageUri
+        name
+        description
+      }
+      notes {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const createAchievement = `mutation CreateAchievement($input: CreateAchievementInput!) {
+  createAchievement(input: $input) {
+    id
+    imageUri
+    name
+    description
+    achievers {
+      id
+      username
+      email
+      emailVerified
+      achievements {
+        id
+        imageUri
+        name
+        description
+      }
+      notes {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const updateAchievement = `mutation UpdateAchievement($input: UpdateAchievementInput!) {
+  updateAchievement(input: $input) {
+    id
+    imageUri
+    name
+    description
+    achievers {
+      id
+      username
+      email
+      emailVerified
+      achievements {
+        id
+        imageUri
+        name
+        description
+      }
+      notes {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const deleteAchievement = `mutation DeleteAchievement($input: DeleteAchievementInput!) {
+  deleteAchievement(input: $input) {
+    id
+    imageUri
+    name
+    description
+    achievers {
+      id
+      username
+      email
+      emailVerified
+      achievements {
+        id
+        imageUri
+        name
+        description
+      }
       notes {
         nextToken
       }

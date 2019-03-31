@@ -3,6 +3,7 @@ type User @model {
   username: String!
   email: String!
   emailVerified: Boolean
+  achievements: [Achievement]
   notes: [Note] @connection(name: "UserNotes")
 }
 
@@ -13,5 +14,15 @@ type Note @model {
   latitude: String
   altitude: String
   content: String
-  user: User @connection(name: "UserNotes")
+  upvotes: Int
+  downvotes: Int
+  author: User @connection(name: "UserNotes")
+}
+
+type Achievement @model {
+  id: ID!
+  imageUri: String
+  name: String
+  description: String
+  achievers: [User]
 }

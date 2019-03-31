@@ -7,6 +7,18 @@ export const onCreateUser = `subscription OnCreateUser {
     username
     email
     emailVerified
+    achievements {
+      id
+      imageUri
+      name
+      description
+      achievers {
+        id
+        username
+        email
+        emailVerified
+      }
+    }
     notes {
       items {
         id
@@ -15,6 +27,8 @@ export const onCreateUser = `subscription OnCreateUser {
         latitude
         altitude
         content
+        upvotes
+        downvotes
       }
       nextToken
     }
@@ -27,6 +41,18 @@ export const onUpdateUser = `subscription OnUpdateUser {
     username
     email
     emailVerified
+    achievements {
+      id
+      imageUri
+      name
+      description
+      achievers {
+        id
+        username
+        email
+        emailVerified
+      }
+    }
     notes {
       items {
         id
@@ -35,6 +61,8 @@ export const onUpdateUser = `subscription OnUpdateUser {
         latitude
         altitude
         content
+        upvotes
+        downvotes
       }
       nextToken
     }
@@ -47,6 +75,18 @@ export const onDeleteUser = `subscription OnDeleteUser {
     username
     email
     emailVerified
+    achievements {
+      id
+      imageUri
+      name
+      description
+      achievers {
+        id
+        username
+        email
+        emailVerified
+      }
+    }
     notes {
       items {
         id
@@ -55,6 +95,8 @@ export const onDeleteUser = `subscription OnDeleteUser {
         latitude
         altitude
         content
+        upvotes
+        downvotes
       }
       nextToken
     }
@@ -69,11 +111,19 @@ export const onCreateNote = `subscription OnCreateNote {
     latitude
     altitude
     content
-    user {
+    upvotes
+    downvotes
+    author {
       id
       username
       email
       emailVerified
+      achievements {
+        id
+        imageUri
+        name
+        description
+      }
       notes {
         nextToken
       }
@@ -89,11 +139,19 @@ export const onUpdateNote = `subscription OnUpdateNote {
     latitude
     altitude
     content
-    user {
+    upvotes
+    downvotes
+    author {
       id
       username
       email
       emailVerified
+      achievements {
+        id
+        imageUri
+        name
+        description
+      }
       notes {
         nextToken
       }
@@ -109,11 +167,91 @@ export const onDeleteNote = `subscription OnDeleteNote {
     latitude
     altitude
     content
-    user {
+    upvotes
+    downvotes
+    author {
       id
       username
       email
       emailVerified
+      achievements {
+        id
+        imageUri
+        name
+        description
+      }
+      notes {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const onCreateAchievement = `subscription OnCreateAchievement {
+  onCreateAchievement {
+    id
+    imageUri
+    name
+    description
+    achievers {
+      id
+      username
+      email
+      emailVerified
+      achievements {
+        id
+        imageUri
+        name
+        description
+      }
+      notes {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const onUpdateAchievement = `subscription OnUpdateAchievement {
+  onUpdateAchievement {
+    id
+    imageUri
+    name
+    description
+    achievers {
+      id
+      username
+      email
+      emailVerified
+      achievements {
+        id
+        imageUri
+        name
+        description
+      }
+      notes {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const onDeleteAchievement = `subscription OnDeleteAchievement {
+  onDeleteAchievement {
+    id
+    imageUri
+    name
+    description
+    achievers {
+      id
+      username
+      email
+      emailVerified
+      achievements {
+        id
+        imageUri
+        name
+        description
+      }
       notes {
         nextToken
       }

@@ -4,7 +4,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { AR } from 'expo';
 import { GraphicsView } from 'expo-graphics';
 import ExpoTHREE, { THREE, AR as ThreeAR } from 'expo-three';
-import MapView, { Marker, Location, Permissions } from 'react-native-maps';
+import { Auth, API, graphqlOperation } from 'aws-amplify';
+import { listNotes } from '../graphql/queries';
+import Geolocation from 'react-native-geolocation-service';
 
 export default class Main extends React.Component {
 
@@ -13,11 +15,29 @@ export default class Main extends React.Component {
   };
 
   state = {
-
+    notes: [{latitude:1,longitude:2},{latitude:0,longitude:-1},{latitude:2,longitude:-2.4},{latitude:0.3,longitude:-1.8}],
+	cubes:[],
+    currentPosition: {}
   };
 
   componentDidMount() {
-    // Called once after the component is mounted
+       Geolocation.getCurrentPosition(position => {
+      this.setState({
+        currentPosition: position.coords
+      });
+    });
+    Geolocation.watchPosition(position => {
+      this.setState({
+        currentPosition: position.coords
+      });
+    })
+	API.graphql(graphqlOperation(listNotes, {filter:{}}))
+    .then(data => {
+      const newNotes = data.data.listNotes.items;
+      this.setState({
+        notes: newNotes
+      });
+    })
   }
 
   componentDidUpdate() {
@@ -25,29 +45,26 @@ export default class Main extends React.Component {
   }
 
   render() {
-	const { navigate } = this.props.navigation;
     return (
-		<View style={styles.container2}>
-			<View style={styles.container1}>
-				<View style={styles.cam}>
-					<GraphicsView
-						isArEnabled
-						onContextCreate={this.onContextCreate}
-						onRender={this.onRender}
-						onPress={(evt) => this.handlePress(evt)}
-					/>
-				</View>
-				<View style={styles.buttons}>
-					<TouchableOpacity style={styles.button} onPress={() => navigate('NewNote')}>
-						<Ionicons name="md-add-circle" size={32} color="white" />
-						<Text style={styles.btext}>Toss a note </Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.button} onPress={() => navigate('Main')}>
-						<Ionicons name="md-home" size={32} color="white" />
-						<Text style={styles.btext}>Home</Text>
-					</TouchableOpacity>
-				</View>
-			</View>
+      <View style={styles.container2}>
+        <View style={styles.cam}>
+        <GraphicsView
+          isArEnabled
+          onContextCreate={this.onContextCreate}
+          onRender={this.onRender}
+          onPress={(evt) => this.handlePress(evt)}
+        />
+        </View>
+        <View style={styles.buttons}>
+          <TouchableOpacity style={styles.button}>
+            <Ionicons name="md-add-circle" size={32} color="white" />
+            <Text style={styles.btext}>Toss a note </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <Ionicons name="md-settings" size={32} color="white" />
+            <Text style={styles.btext}>Settings</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -81,17 +98,26 @@ export default class Main extends React.Component {
     const material = new THREE.MeshPhongMaterial({
       color: 0x7efffc
     });
-    this.cube1 = new THREE.Mesh(geometry, material);
-    this.cube2 = new THREE.Mesh(geometry, material);
-    this.cube3 = new THREE.Mesh(geometry, material);
-    this.cube1.position.z = -0.4;
-    this.cube2.position.z = -0.8;
-    this.cube3.position.z = -1.2;
-    this.setState({cubes: [this.cube1,this.cube2,this.cube3]});
-    this.scene.add(this.cube1);
-    this.scene.add(this.cube2);
-    this.scene.add(this.cube3);
-    this.scene.remove(this.state.cubes[0]);
+
+    this.state.notes.forEach(x => {
+	var temp = new THREE.Mesh(geometry, material);
+      temp.position.z = x.longitude;
+      temp.position.x = x.latitude;
+      this.scene.add(temp);
+	  var joined = this.state.cubes.concat(temp);
+	  this.setState({cubes: joined});
+	});
+    // this.cube1 = new THREE.Mesh(geometry, material);
+    // this.cube2 = new THREE.Mesh(geometry, material);
+    // this.cube3 = new THREE.Mesh(geometry, material);
+    // this.cube1.position.z = -0.4;
+    // this.cube2.position.z = -0.8;
+    // this.cube3.position.z = -1.2;
+    // this.setState({cubes: [this.cube1,this.cube2,this.cube3]});
+    // this.scene.add(this.cube1);
+    // this.scene.add(this.cube2);
+    // this.scene.add(this.cube3);
+    // this.scene.remove(this.state.cubes[0]);
 
     // Light
     this.scene.add(new THREE.AmbientLight(0xffffff,0.8));
@@ -100,19 +126,23 @@ export default class Main extends React.Component {
     animate = () => {
       requestAnimationFrame(animate);
 
-      this.cube1.rotation.x += 0.1;
       if(this.clock%200 == 0 && false){
-        var temp = new THREE.Mesh(geometry, material);
-        temp.position.z = Math.random()*-3;
+		    this.state.notes.forEach(x => {
+			var temp = new THREE.Mesh(geometry, material);
+			  temp.position.z = -1;
+			  temp.position.x = 0;
+			  this.scene.add(temp);
+			});
+        // var temp = new THREE.Mesh(geometry, material);
+        // temp.position.z = Math.random()*-3;
 
-        this.scene.add(temp);
-        var joined = this.state.cubes.concat(temp);
-        this.setState({cubes: joined});
-        this.scene.remove(this.state.cubes[0]);
-        var chopped = this.state.cubes.slice(1);
-        this.setState({cubes:chopped});
+        // this.scene.add(temp);
+        // var joined = this.state.cubes.concat(temp);
+        // this.setState({cubes: joined});
+        // this.scene.remove(this.state.cubes[0]);
+        // var chopped = this.state.cubes.slice(1);
+        // this.setState({cubes:chopped});
       }
-      console.log(this.scene.toJSON());
       this.clock += 1;
 
       this.renderer.render(this.scene, this.camera);
@@ -153,7 +183,7 @@ const styles = StyleSheet.create({
   },
   cam: {
     width:300,
-    height:500,
+    height:450,
     marginTop:50,
   },
   buttons: {

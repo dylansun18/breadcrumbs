@@ -4,6 +4,8 @@ import {createStackNavigator, createAppContainer} from 'react-navigation';
 
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 
+import {getNote} from '../graphql/queries';
+
 
 export default class Note extends React.Component {
 

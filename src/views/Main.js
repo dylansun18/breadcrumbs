@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 
+import Map from '../components/Map';
 import VR from '../components/VR';
 
 export default class Main extends React.Component {
@@ -25,14 +26,8 @@ export default class Main extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container1}>
-       <Text style={styles.title}>Breadcrumbs</Text>
-        <TouchableOpacity style={styles.view1} onPress={() => this.props.navigation.navigate('Main')}>
-          <Text style={styles.subtitle}>Tap here to enter</Text>
-        </TouchableOpacity>
-        <Button style={{marginTop: 10}} title='New Note' onPress={() => navigate('NewNote')} />
-        <Button style={{marginTop: 10}} title='Note' onPress={() => navigate('Note')} />
-        <Button style={{marginTop: 10}} title='Profile' onPress={() => navigate('Profile')} />
-        <Button style={{marginTop: 10}} title='Map' onPress={() => navigate('Map')} /> 
+		<Map navigation={this.props.navigation} style={{flex: 1}} />
+		<VR style={{flex: 1}} />
       </View>
     );
   }
@@ -65,7 +60,7 @@ const styles = StyleSheet.create({
   },
   cam: {
     width:300,
-    height:450,
+    height:300,
     marginTop:50,
   },
   buttons: {

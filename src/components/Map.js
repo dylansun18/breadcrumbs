@@ -8,12 +8,8 @@ import {Auth, API, graphqlOperation} from 'aws-amplify';
 
 import NoteMarker from './noteMarker.js';
 
-
 export default class Map extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
+	
 	state = {
 		region: null,
 		circle: {latitude: -118.451083, longitude: 34.071543},
@@ -23,13 +19,17 @@ export default class Map extends React.Component {
 	
 
 	componentWillMount() {
-		this.getLocationAsync();
-		API.graphql(graphqlOperation(getNote, {latitude: this.props.latitude, longitude: this.props.longitude}))
-		.then((data) => {
-			this.setState({
-				note: data.data.getNote
-			});
-		})
+		// this.getLocationAsync();
+		// API.graphql(graphqlOperation(getNote, {latitude: this.props.latitude, longitude: this.props.longitude}))
+		// .then((data) => {
+			// this.setState({
+				// note: data.data.getNote
+			// });
+		// });
+		
+		this.setState({
+			notes:[{latitude: 34.070976, longitude: -118.446930}, {latitude: 34.069335, longitude: -118.448088}]
+		});
 	}
 
 	getLocationAsync = async () => {
@@ -41,18 +41,12 @@ export default class Map extends React.Component {
     }
 
     let location = await Location.getCurrentPositionAsync({});
-	const current_region = {
+	const region = {
 		latitude: location.coords.latitude,
 		longitude: location.coords.longitude,
-		latitudeDelta: previousState.region.latitudeDelta,
-		longitudeDelta: previousState.region.longitudeDelta,
+		...deltas
 		};
-	const current_circle = {
-		latitude: location.coords.latitude,
-		longitude: location.coords.longitude
-		};
-		await this.setState({ region: current_region });
-		await this.setState({circle: current_circle});
+		await this.setState({ region });
 	}
 
 	static navigationOptions = {
@@ -73,7 +67,6 @@ export default class Map extends React.Component {
 		 	<NoteMarker key={note.id} navigator={this.props.navigator} note = {note}/>
 		);
 		return (
-			
 			<View>
 				<View>
 					<MapView
@@ -83,26 +76,26 @@ export default class Map extends React.Component {
 						showsMyLocationButton
 						followsUserLocation
 					>
-					<Circle
-						center = {this.state.circle}
-						radius = {1000}
+						<Circle
+							center = {this.state.circle}
+							radius = {1000}
 						/>
-					{NoteMarker}		
-				</MapView>
-				<View style={{top: 300}}>
-				<Button
-					onPress={() => navigate('Main')}
-					title="Return to Home Screen"
-					accessibilityLabel="Return to Home Screen"
-				/>
-				
+						{NoteMarker}		
+					</MapView>
+					<View style={{top: 300}}>
+						<Button
+							onPress={() => navigate('Main')}
+							title="Return to Home Screen"
+							accessibilityLabel="Return to Home Screen"
+						/>
+					</View>
 				</View>
 			</View>
-		</View>);
+		);
 	}
 }
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
 	container: {
 		position: 'absolute',
 		top: 0,
@@ -111,6 +104,6 @@ styles = StyleSheet.create({
 		bottom: 0,
 		justifyContent: 'flex-end',
 		alignItems: 'center',
-		height: 300,
+		height: 500,
 	},
 });

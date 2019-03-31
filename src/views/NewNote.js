@@ -3,8 +3,7 @@ import {Alert, StyleSheet, Text, TextInput, AppRegistry, View, TouchableOpacity,
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 import Geolocation from 'react-native-geolocation-service';
 
-import mutations from '../graphql/mutations.js'
-import { Auth, API, graphqlOperation } from 'aws-amplify'
+import HomeScreen from '../../App.js'
 
 
 export default class NewNote extends React.Component {
@@ -20,7 +19,6 @@ export default class NewNote extends React.Component {
 
   componentDidMount() {
     // Called once after the component is mounted
-
   }
 
   componentDidUpdate() {
@@ -73,8 +71,7 @@ export default class NewNote extends React.Component {
          </View>
        )
      }
-
-
+	 
   render() {
     if(this.state.isLoading) {
       return (this.renderLoading());
@@ -87,8 +84,8 @@ export default class NewNote extends React.Component {
           ref={input => { this.textInput = input }} // allows us to reference & clear TextInput later
           style={{marginLeft: 15, marginRight: 15, height: 40, borderColor: 'blue', borderWidth: 2}}
           placeholder="What's on your mind?"
-          onChangeText={(noteContent)=> this.setState({noteContent})}
-          value={this.state.noteContent}
+          onChangeText={(text)=> this.setState({text})}
+          value={this.state.text}
           />
         <Button
           style={{marginTop: 20}}
@@ -107,7 +104,7 @@ export default class NewNote extends React.Component {
           onPress={() => {
             goBack();
           }}
-          title="Return to Home Screen"
+          title="Go Back"
         />
         </View>
     );

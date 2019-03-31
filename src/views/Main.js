@@ -32,6 +32,7 @@ export default class Main extends React.Component {
         <Button style={{marginTop: 10}} title='New Note' onPress={() => navigate('NewNote')} />
         <Button style={{marginTop: 10}} title='Note' onPress={() => navigate('Note')} />
         <Button style={{marginTop: 10}} title='Profile' onPress={() => navigate('Profile')} />
+        <Button style={{marginTop: 10}} title='Map' onPress={() => navigate('Map')} />
       </View>
     );
   }

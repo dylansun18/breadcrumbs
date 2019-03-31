@@ -14,8 +14,6 @@ export default class Map extends React.Component {
 		region: null,
 		circle: null,
 		note_list: [{latitude: -118.451083, longitude: 34.071543}] 				//should contain a list of nearby notes with info about location 
-		circle: null,
-		note_list: [{latitude: -118.451083, longitude: 34.071543}]
 	};
 
 	componentWillMount() {
@@ -102,6 +100,7 @@ export default class Map extends React.Component {
 				/>
 				</View>
 			</View>
+		</View>
 		);
 	}
 }

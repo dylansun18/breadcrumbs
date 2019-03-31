@@ -2,10 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import MapView, { Marker, Location, Permissions, Circle } from 'react-native-maps';
 
+import {getNote} from '../graphql/queries';
 
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 
-import noteMarker from './noteMarker.js';
+import NoteMarker from './noteMarker.js';
 
 
 export default class Map extends React.Component {
@@ -15,25 +16,21 @@ export default class Map extends React.Component {
 
 	state = {
 		region: null,
-		circle: null,
+		circle: {latitude: -118.451083, longitude: 34.071543},
 		note_list: [{latitude: -118.451083, longitude: 34.071543}] 				//should contain a list of nearby notes with info about location
 	};
 
+	
+
 	componentWillMount() {
 		this.getLocationAsync();
-		//this.noteInRange(this.props.getNote);				//not sure if this makes any sense
+		API.graphql(graphqlOperation(getNote, {latitude: this.props.latitude, longitude: this.props.longitude}))
+		.then((data) => {
+			this.setState({
+				note: data.data.getNote
+			});
+		})
 	}
-
-	//iterate thru the database notes to see if any notes nearby will be added to note list
-	// noteInRange(some_note) {
-	// 	var long_dist = this.region.longitude - some_note.longitude
-	// 	var lat_dist = this.region.latitude - some_note.latitude
-	// 	const actual_dist = Math.sqrt(long_dist * long_dist + lat_dist * lat_dist);
-	// 	if(actual_dist <= 100) {																	//can change value of 100
-	// 		note_list.push(some_note);															//idk if you do this or the one below or a mix
-	// 		return API.graphql(graphqlOperation(getNote, {note: some_note}));
-	// 	}
-	// }
 
 	getLocationAsync = async () => {
 		let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -72,15 +69,15 @@ export default class Map extends React.Component {
 
 	render() {
 		const { navigate } = this.props.navigation;
-		const NoteMarkers = this.state.note_list.map((notes) =>
-			<noteMarker key={note.id} navigator={this.props.navigator} notes = {notes}/>
+		const NoteMarkers = this.state.note_list.map((note) =>
+		 	<NoteMarker key={note.id} navigator={this.props.navigator} note = {note}/>
 		);
 		return (
 			
 			<View>
 				<View>
 					<MapView
-						styles={styles.container}
+						style={styles.container}
 						region={this.region}
 						showsUserLocation
 						showsMyLocationButton
@@ -90,7 +87,7 @@ export default class Map extends React.Component {
 						center = {this.state.circle}
 						radius = {1000}
 						/>
-						{NoteMarkers}
+					{NoteMarker}		
 				</MapView>
 				<View style={{top: 300}}>
 				<Button
@@ -98,20 +95,22 @@ export default class Map extends React.Component {
 					title="Return to Home Screen"
 					accessibilityLabel="Return to Home Screen"
 				/>
+				
 				</View>
 			</View>
 		</View>);
 	}
-	styles = StyleSheet.create({
-		container: {
-			position: 'absolute',
-			top: 0,
-			left: 0,
-			right: 0,
-			bottom: 0,
-			justifyContent: 'flex-end',
-			alignItems: 'center',
-			height: 300,
-		},
-	});
 }
+
+styles = StyleSheet.create({
+	container: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		justifyContent: 'flex-end',
+		alignItems: 'center',
+		height: 300,
+	},
+});

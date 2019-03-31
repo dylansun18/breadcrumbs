@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
 import { Marker } from 'react-native-maps';
 
-type Props = {};
-export default class NoteMarker extends Component<Props> {
+export default class NoteMarker extends Component {
     state = {
         note: this.props.note,
         coordinate: {

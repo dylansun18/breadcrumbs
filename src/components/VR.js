@@ -122,7 +122,7 @@ export default class Main extends React.Component {
   };
 }
 const screenCenter = new THREE.Vector2(0.5, 0.5);
-}
+
 
 const styles = StyleSheet.create({
   container1: {

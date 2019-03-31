@@ -23,32 +23,14 @@ export default class Map extends React.Component {
 	
 
 	componentWillMount() {
-		this.getLocationAsync()
-		.then((data) => {
-			location: data.data.getNote
-		});
+		this.getLocationAsync();
 		API.graphql(graphqlOperation(getNote, {latitude: this.props.latitude, longitude: this.props.longitude}))
 		.then((data) => {
 			this.setState({
 				note: data.data.getNote
 			});
 		})
-		
-		
-		//this.noteInRange(this.props.getNote);				//not sure if this makes any sense
 	}
-
-
-	//iterate thru the database notes to see if any notes nearby will be added to note list
-	// noteInRange(some_note) {
-	// 	var long_dist = this.region.longitude - some_note.longitude
-	// 	var lat_dist = this.region.latitude - some_note.latitude
-	// 	const actual_dist = Math.sqrt(long_dist * long_dist + lat_dist * lat_dist);
-	// 	if(actual_dist <= 100) {																	//can change value of 100
-	// 		note_list.push(some_note);															//idk if you do this or the one below or a mix
-	// 		return API.graphql(graphqlOperation(getNote, {note: some_note}));
-	// 	}
-	// }
 
 	getLocationAsync = async () => {
 		let { status } = await Permissions.askAsync(Permissions.LOCATION);

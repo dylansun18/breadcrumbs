@@ -1,39 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import MapView, { Marker, Location, Permissions, Circle } from 'react-native-maps';
-
-
-import {Auth, API, graphqlOperation} from 'aws-amplify';
-
-import noteMarker from './noteMarker.js';
-
+import MapView, { Marker, Location, Permissions } from 'react-native-maps';
 
 export default class Map extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
+	
 	state = {
 		region: null,
-		circle: null,
-		note_list: [{latitude: -118.451083, longitude: 34.071543}] 				//should contain a list of nearby notes with info about location
 	};
 
 	componentWillMount() {
 		this.getLocationAsync();
-		//this.noteInRange(this.props.getNote);				//not sure if this makes any sense
 	}
-
-	//iterate thru the database notes to see if any notes nearby will be added to note list
-	// noteInRange(some_note) {
-	// 	var long_dist = this.region.longitude - some_note.longitude
-	// 	var lat_dist = this.region.latitude - some_note.latitude
-	// 	const actual_dist = Math.sqrt(long_dist * long_dist + lat_dist * lat_dist);
-	// 	if(actual_dist <= 100) {																	//can change value of 100
-	// 		note_list.push(some_note);															//idk if you do this or the one below or a mix
-	// 		return API.graphql(graphqlOperation(getNote, {note: some_note}));
-	// 	}
-	// }
 
 	getLocationAsync = async () => {
 		let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -44,18 +21,12 @@ export default class Map extends React.Component {
     }
 
     let location = await Location.getCurrentPositionAsync({});
-	const current_region = {
+	const region = {
 		latitude: location.coords.latitude,
 		longitude: location.coords.longitude,
-		latitudeDelta: previousState.region.latitudeDelta,
-		longitudeDelta: previousState.region.longitudeDelta,
+		...deltas
 		};
-	const current_circle = {
-		latitude: location.coords.latitude,
-		longitude: location.coords.longitude
-		};
-		await this.setState({ region: current_region });
-		await this.setState({circle: current_circle});
+		await this.setState({ region });
 	}
 
 	static navigationOptions = {
@@ -72,26 +43,16 @@ export default class Map extends React.Component {
 
 	render() {
 		const { navigate } = this.props.navigation;
-		const NoteMarkers = this.state.note_list.map((notes) =>
-			<noteMarker key={note.id} navigator={this.props.navigator} notes = {notes}/>
-		);
 		return (
-			
 			<View>
 				<View>
 					<MapView
-						styles={styles.container}
+						style={styles.container}
 						region={this.region}
 						showsUserLocation
 						showsMyLocationButton
-						followsUserLocation
-					>
-					<Circle
-						center = {this.state.circle}
-						radius = {1000}
-						/>
-						{NoteMarkers}
-				</MapView>
+					/>
+				</View>
 				<View style={{top: 300}}>
 				<Button
 					onPress={() => navigate('Main')}
@@ -100,18 +61,19 @@ export default class Map extends React.Component {
 				/>
 				</View>
 			</View>
-		</View>);
+		);
 	}
-	styles = StyleSheet.create({
-		container: {
-			position: 'absolute',
-			top: 0,
-			left: 0,
-			right: 0,
-			bottom: 0,
-			justifyContent: 'flex-end',
-			alignItems: 'center',
-			height: 300,
-		},
-	});
 }
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    height: 300,
+  },
+});

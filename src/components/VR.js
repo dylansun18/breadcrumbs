@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { AR } from 'expo';
 import { GraphicsView } from 'expo-graphics';
 import ExpoTHREE, { THREE, AR as ThreeAR } from 'expo-three';
+import MapView, { Marker, Location, Permissions } from 'react-native-maps';
 
 export default class Main extends React.Component {
 
@@ -24,26 +25,29 @@ export default class Main extends React.Component {
   }
 
   render() {
+	const { navigate } = this.props.navigation;
     return (
-      <View style={styles.container2}>
-        <View style={styles.cam}>
-        <GraphicsView
-          isArEnabled
-          onContextCreate={this.onContextCreate}
-          onRender={this.onRender}
-          onPress={(evt) => this.handlePress(evt)}
-        />
-        </View>
-        <View style={styles.buttons}>
-          <TouchableOpacity style={styles.button}>
-            <Ionicons name="md-add-circle" size={32} color="white" />
-            <Text style={styles.btext}>Toss a note </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Ionicons name="md-settings" size={32} color="white" />
-            <Text style={styles.btext}>Settings</Text>
-          </TouchableOpacity>
-        </View>
+		<View style={styles.container2}>
+			<View style={styles.container1}>
+				<View style={styles.cam}>
+					<GraphicsView
+						isArEnabled
+						onContextCreate={this.onContextCreate}
+						onRender={this.onRender}
+						onPress={(evt) => this.handlePress(evt)}
+					/>
+				</View>
+				<View style={styles.buttons}>
+					<TouchableOpacity style={styles.button} onPress={() => navigate('NewNote')}>
+						<Ionicons name="md-add-circle" size={32} color="white" />
+						<Text style={styles.btext}>Toss a note </Text>
+					</TouchableOpacity>
+					<TouchableOpacity style={styles.button} onPress={() => navigate('Main')}>
+						<Ionicons name="md-home" size={32} color="white" />
+						<Text style={styles.btext}>Home</Text>
+					</TouchableOpacity>
+				</View>
+			</View>
       </View>
     );
   }
@@ -122,7 +126,7 @@ export default class Main extends React.Component {
   };
 }
 const screenCenter = new THREE.Vector2(0.5, 0.5);
-}
+
 
 const styles = StyleSheet.create({
   container1: {
@@ -149,7 +153,7 @@ const styles = StyleSheet.create({
   },
   cam: {
     width:300,
-    height:450,
+    height:500,
     marginTop:50,
   },
   buttons: {

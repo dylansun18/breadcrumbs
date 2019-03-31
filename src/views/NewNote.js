@@ -2,8 +2,7 @@ import React from 'react';
 import {Alert, StyleSheet, Text, TextInput, AppRegistry, View, TouchableOpacity, Button } from 'react-native';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 
-import mutations from '../graphql/mutations.js'
-import { Auth, API, graphqlOperation } from 'aws-amplify'
+import HomeScreen from '../../App.js'
 
 
 export default class NewNote extends React.Component {
@@ -18,51 +17,11 @@ export default class NewNote extends React.Component {
 
   componentDidMount() {
     // Called once after the component is mounted
-
   }
 
   componentDidUpdate() {
     // Called every time setState or forceUpdate is called
   }
-
-  submit(){
-    Geolocation.getCurrentPosition(
-         (position) => {
-           Auth.currentAuthenticatedUser()
-           .then(user => {
-             const username = user.username;
-             API.graphql(graphqlOperation(listUsers, {
-               filter: {
-                 username: { eq: username }
-               },
-             }))
-             .then(data => {
-               const userID = data.data.listUsers.id;
-               API.graphql(graphqlOperation(createNote, {
-                 input: {
-                   longitude: position.coords.longitude,
-                   latitutde: position.coords.latitude,
-                   altitude: position.coords.altitude,
-                   content: this.state.noteContent,
-                   noteAuthorId: userID
-                }
-               }))
-               .then(data => {
-                 goBack()
-               })
-             });
-           });
-         },
-         (error) => {
-           if (error) {
-             this.showLocationError();
-             this.setState({ error: error.message });
-           }
-         },
-         { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
-       );
-     }
-
 
   render() {
     const {goBack} = this.props.navigation;
@@ -73,15 +32,16 @@ export default class NewNote extends React.Component {
           ref={input => { this.textInput = input }} // allows us to reference & clear TextInput later
           style={{marginLeft: 15, marginRight: 15, height: 40, borderColor: 'blue', borderWidth: 2}}
           placeholder="What's on your mind?"
-          onChangeText={(noteContent)=> this.setState({noteContent})}
-          value={this.state.noteContent}
+          onChangeText={(text)=> this.setState({text})}
+          value={this.state.text}
           />
         <Button
           style={{marginTop: 20}}
           onPress={() => {
             Alert.alert('You left your note!');
             this.textInput.clear() // clears input after submitting
-            this.submit()
+			goBack()
+            // put other stuff here
           }}
           title="Leave Note"
           />
@@ -90,7 +50,7 @@ export default class NewNote extends React.Component {
           onPress={() => {
             goBack()
           }}
-          title="Return to Home Screen"
+          title="Go Back"
         />
         </View>
     );

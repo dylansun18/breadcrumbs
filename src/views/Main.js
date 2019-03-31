@@ -1,8 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 
-import VR from '../components/VR';
-
 export default class Main extends React.Component {
 
   static navigationOptions = {
@@ -26,7 +24,7 @@ export default class Main extends React.Component {
     return (
       <View style={styles.container1}>
         <Text style={styles.title}>Breadcrumbs</Text>
-        <TouchableOpacity style={styles.view1} onPress={() => this.props.navigation.navigate('Main')}>
+        <TouchableOpacity style={styles.view1} onPress={() => this.props.navigation.navigate('AR')}>
           <Text style={styles.subtitle}>Tap here to enter</Text>
         </TouchableOpacity>
         <Button style={{marginTop: 10}} title='New Note' onPress={() => navigate('NewNote')} />

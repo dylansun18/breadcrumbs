@@ -7,18 +7,6 @@ export const getUser = `query GetUser($id: ID!) {
     username
     email
     emailVerified
-    achievements {
-      id
-      imageUri
-      name
-      description
-      achievers {
-        id
-        username
-        email
-        emailVerified
-      }
-    }
     notes {
       items {
         id
@@ -27,8 +15,6 @@ export const getUser = `query GetUser($id: ID!) {
         latitude
         altitude
         content
-        upvotes
-        downvotes
       }
       nextToken
     }
@@ -46,12 +32,6 @@ export const listUsers = `query ListUsers(
       username
       email
       emailVerified
-      achievements {
-        id
-        imageUri
-        name
-        description
-      }
       notes {
         nextToken
       }
@@ -68,19 +48,11 @@ export const getNote = `query GetNote($id: ID!) {
     latitude
     altitude
     content
-    upvotes
-    downvotes
-    author {
+    user {
       id
       username
       email
       emailVerified
-      achievements {
-        id
-        imageUri
-        name
-        description
-      }
       notes {
         nextToken
       }
@@ -101,55 +73,7 @@ export const listNotes = `query ListNotes(
       latitude
       altitude
       content
-      upvotes
-      downvotes
-      author {
-        id
-        username
-        email
-        emailVerified
-      }
-    }
-    nextToken
-  }
-}
-`;
-export const getAchievement = `query GetAchievement($id: ID!) {
-  getAchievement(id: $id) {
-    id
-    imageUri
-    name
-    description
-    achievers {
-      id
-      username
-      email
-      emailVerified
-      achievements {
-        id
-        imageUri
-        name
-        description
-      }
-      notes {
-        nextToken
-      }
-    }
-  }
-}
-`;
-export const listAchievements = `query ListAchievements(
-  $filter: ModelAchievementFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listAchievements(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      imageUri
-      name
-      description
-      achievers {
+      user {
         id
         username
         email

@@ -21,6 +21,7 @@ import Profile from './src/views/Profile';
 
 // Components
 import Map from  './src/components/Map';
+import AR from './src/components/VR';
 
 // Navigation stack
 const AppNavigator = createStackNavigator(
@@ -29,7 +30,8 @@ const AppNavigator = createStackNavigator(
     NewNote: NewNote,
     Note: Note,
     Profile: Profile,
-	Map: Map
+	Map: Map,
+	AR: AR
   },
   {
     initialRouteName: 'Main'

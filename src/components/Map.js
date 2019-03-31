@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import MapView, { Marker, Location, Permissions, Circle } from 'react-native-maps';
 
+import {Auth, API, graphqlOperation} from 'aws-amplify';
+
 export default class Map extends React.Component {
 	constructor(props) {
 		super(props);
@@ -9,11 +11,24 @@ export default class Map extends React.Component {
 	
 	state = {
 		region: null,
-		circle: null
+		circle: null,
+		note_list: [{latitude: this.region.latitude + 1, longitude: this.region.longitude + 1}] 				//should contain a list of nearby notes with info about location 
 	};
 
 	componentWillMount() {
 		this.getLocationAsync();
+		this.noteInRange(this.props.getNote);				//not sure if this makes any sense
+	}
+
+	//iterate thru the database notes to see if any notes nearby will be added to note list
+	noteInRange(some_note) {
+		var long_dist = this.region.longitude - some_note.longitude
+		var lat_dist = this.region.latitude - some_note.latitude
+		const actual_dist = Math.sqrt(long_dist * long_dist + lat_dist * lat_dist);
+		if(actual_dist <= 100) {																	//can change value of 100
+			note_list.push(some_note);															//idk if you do this or the one below or a mix
+			return API.graphql(graphqlOperation(getNote, {note: some_note}));
+		}
 	}
 
 	getLocationAsync = async () => {
@@ -53,6 +68,15 @@ export default class Map extends React.Component {
 
 	render() {
 		const { navigate } = this.props.navigation;
+		for(var i; i < this.state.note_list.length; i++) {
+			//display each spot
+			dot = {
+				latitude: this.state.note_list[i].latitude,
+				longitude: this.state.note_list[i]
+				};
+		const NoteMarkers = this.state.note_list.map((notes) =>
+			<NoteMarker key={note.id} navigator={this.props.navigator} notes = {notes}/>
+		);
 		return (
 			<View>
 				<View>
@@ -65,8 +89,11 @@ export default class Map extends React.Component {
 					>
 					<Circle
 						center = {this.state.circle}
-						radius = {1000}
+						radius = {1000}												//can prob change radius
 						/>
+				
+						//should display mini dot with location of notes
+						{NoteMarkers}
 				</MapView>
 				<View style={{top: 300}}>
 				<Button

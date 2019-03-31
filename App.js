@@ -16,13 +16,17 @@ import NewNote from './src/views/NewNote';
 import Note from './src/views/Note';
 import Profile from './src/views/Profile';
 
+// Components
+import Map from  './src/components/Map';
+
 // Navigation stack
 const AppNavigator = createStackNavigator(
   {
     Main: Main,
     NewNote: NewNote,
     Note: Note,
-    Profile: Profile
+    Profile: Profile,
+	Map: Map
   },
   {
     initialRouteName: 'Main'

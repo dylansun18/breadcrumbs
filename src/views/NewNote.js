@@ -1,6 +1,7 @@
 import React from 'react';
 import {Alert, StyleSheet, Text, TextInput, AppRegistry, View, TouchableOpacity, Button } from 'react-native';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
+import Geolocation from 'react-native-geolocation-service';
 
 import mutations from '../graphql/mutations.js'
 import { Auth, API, graphqlOperation } from 'aws-amplify'
@@ -13,7 +14,8 @@ export default class NewNote extends React.Component {
   };
 
   state = {
-
+    noteContent: '',
+    submitting: false
   };
 
   componentDidMount() {
@@ -25,7 +27,7 @@ export default class NewNote extends React.Component {
     // Called every time setState or forceUpdate is called
   }
 
-  submit(){
+  submit() {
     Geolocation.getCurrentPosition(
          (position) => {
            Auth.currentAuthenticatedUser()
@@ -48,7 +50,7 @@ export default class NewNote extends React.Component {
                 }
                }))
                .then(data => {
-                 goBack()
+                 goBack();
                })
              });
            });
@@ -63,8 +65,20 @@ export default class NewNote extends React.Component {
        );
      }
 
+     //loading screen
+     renderLoading = () => {
+       return (
+         <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+           <ActivityIndicator size="large" style={{marginTop: 250}}/>
+         </View>
+       )
+     }
+
 
   render() {
+    if(this.state.isLoading) {
+      return (this.renderLoading());
+    }
     const {goBack} = this.props.navigation;
     return (
       <View style={styles.container}>
@@ -79,16 +93,19 @@ export default class NewNote extends React.Component {
         <Button
           style={{marginTop: 20}}
           onPress={() => {
-            Alert.alert('You left your note!');
-            this.textInput.clear() // clears input after submitting
-            this.submit()
+            this.textInput.clear(); // clears input after submitting
+            this.setState({
+              submitting: true
+            });
+            this.submit();
           }}
+          disabled={this.state.submitting}
           title="Leave Note"
           />
         <Button
           style={{marginTop: 10}}
           onPress={() => {
-            goBack()
+            goBack();
           }}
           title="Return to Home Screen"
         />

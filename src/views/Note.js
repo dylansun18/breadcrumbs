@@ -27,25 +27,6 @@ export default class Note extends React.Component {
     }));
   }
 
-  getAuthor(username) {
-    return API.graphql(graphqlOperation(getNote,{
-      author: username
-    }))
-  }
-
-  getUpvote(upvote_count) {
-    return API.graphql(graphqlOperation(getNote, {
-      upvote: upvote_count
-    }))
-  }
-
-  getDownvote(downvote_count) {
-    return API.graphql(graphqlOperation(getNote, {
-      upvote: downvote_count
-    }))
-  }
-  
-
   componentDidMount() {
     // Called once after the component is mounted
     this.getNote(this.props.noteId)
@@ -105,10 +86,10 @@ export default class Note extends React.Component {
     var author = this.state.note.author
     var upvote = this.state.note.upvote
     var downvote = this.state.note.downvote
-    
-    return (  
+
+    return (
       <View style={styles.container}>
-        <Button style = {top_corner.subtitle} title = 'Back' onPress ={() => goBack()} /> 
+        <Button style = {top_corner.subtitle} title = 'Back' onPress ={() => goBack()} />
         <Text style= {styles.title} >Note</Text>
         <Text style = {top_corner.container} > {note_text} </Text>
         <View style = {bottom.container}>
@@ -145,7 +126,7 @@ const top_corner = StyleSheet.create({
     flex: 1,
     marginTop: 10,
     marginLeft: 20,
-    marginRight: 20, 
+    marginRight: 20,
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',

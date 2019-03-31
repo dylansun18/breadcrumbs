@@ -4,6 +4,9 @@ import {createStackNavigator, createAppContainer} from 'react-navigation';
 
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 
+import {getNote} from '../graphql/queries';
+
+
 export default class Note extends React.Component {
 
   static navigationOptions = {
@@ -14,8 +17,8 @@ export default class Note extends React.Component {
     vote: 1,
     upvote: 0,
     downvote: 0,
-    note: null,
-    author: null
+    note: " ",
+    author: " "
   };
 
   getNote(note_id) {
@@ -27,11 +30,11 @@ export default class Note extends React.Component {
   componentDidMount() {
     // Called once after the component is mounted
     this.getNote(this.props.noteId)
-    .then((data)=>{
-      this.setState({
+     .then((data)=>{
+       this.setState({
         note: data.data.getNote
-      });
-    });
+       });
+     });
   }
 
   componentDidUpdate() {

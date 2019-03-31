@@ -2,9 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import MapView, { Marker, Location, Permissions, Circle } from 'react-native-maps';
 
-import noteMarker from './noteMarker.js';
 
 import {Auth, API, graphqlOperation} from 'aws-amplify';
+
+import noteMarker from './noteMarker.js';
+
 
 export default class Map extends React.Component {
 	constructor(props) {
@@ -74,6 +76,7 @@ export default class Map extends React.Component {
 			<noteMarker key={note.id} navigator={this.props.navigator} notes = {notes}/>
 		);
 		return (
+			
 			<View>
 				<View>
 					<MapView

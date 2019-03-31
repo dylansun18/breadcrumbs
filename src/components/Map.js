@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import MapView, { Marker, Location, Permissions, Circle } from 'react-native-maps';
 
-import noteMarker from './noteMarker.js';
 
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 
